@@ -1,24 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package Business;
 
-/**
- *
- * @author Neal Valdez
- */
-public class PersonObj {
+
+public abstract class PersonObj {
     
+    //Properties
     protected int Id;
     protected String fname;
     protected String lname;
     protected String email;
     protected String pw;
-    protected String address;    
-
-
-protected PersonObj() {
+    protected String address; 
+    
+    //Constructors
+    protected PersonObj() {
     
         Id = 0;
         fname = "";
@@ -26,10 +20,9 @@ protected PersonObj() {
         email = "";
         pw = "";
         address = "";   
-}
+    }
 
-protected PersonObj(int Id, String fname, String lname, String email,
-                        String password, String address){
+    protected PersonObj(int Id, String fname, String lname, String email, String password, String address){
     
     this.Id = Id;
     this.fname = fname;
@@ -37,59 +30,67 @@ protected PersonObj(int Id, String fname, String lname, String email,
     this.email = email;
     this.pw = password;
     this.address = address;    
-}
-
-public int getID(){
+    
+    }
+    
+    //getters and Setters
+    public int getId() {
         return Id;
     }
-    public void setId(int id){
-        Id = id;
+
+    public void setId(int Id) {
+        this.Id = Id;
     }
-    
-    public String getFname(){
+
+    public String getFname() {
         return fname;
     }
-    public void setFname(String Fname){
-        fname = Fname;
+
+    public void setFname(String fname) {
+        this.fname = fname;
     }
-    
-    public String getLname(){
+
+    public String getLname() {
         return lname;
     }
-    public void setLname(String Lname){
-        lname = Lname;
+
+    public void setLname(String lname) {
+        this.lname = lname;
     }
-    
-    public String getEmail(){
+
+    public String getEmail() {
         return email;
     }
-    public void setEmail(String Email){
-        email = Email;
+
+    public void setEmail(String email) {
+        this.email = email;
     }
-    
-    public String getPassword(){
+
+    public String getPw() {
         return pw;
     }
-    public void setPassword(String Password){
-        pw = Password;
+
+    public void setPw(String pw) {
+        this.pw = pw;
     }
-    
-    public String getAddress(){
+
+    public String getAddress() {
         return address;
     }
-    public void setAddress(String Address){
-        address = Address;
+
+    public void setAddress(String address) {
+        this.address = address;
     }
-    
-    public void display(){
-    
-        System.out.println(getID()+"\t"+getFname()+"\t"+getLname()+"\t"+getEmail()+"\t"+getPassword()+"\t"+getAddress());
         
-}
-    
-    public static void main(String [] args){        
-        PersonObj p1 = new PersonObj(123, "Bob", "Jones", "bobjones123@gmail.com", "secret123", "123 asdfgh Dr");        
-        p1.display();
-    }
-    
+    //Database access methods
+    //
+    //Select Customer from database and populate object with it
+    public abstract void selectDB(int primaryKey);
+    //
+    //Insert populated Customer Object into database
+    public abstract void insertDB();     
+    //
+    //Delete populated Customer Object from database
+    public abstract void deleteDB();  
+
 }
