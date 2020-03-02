@@ -6,17 +6,17 @@ import java.sql.SQLException;
 public class Customer extends PersonObj {
     
     //Properties
-    int custID;
+    String custID;
     int cardInfo;
     
     //Constructors
     public Customer() {
         
         //call overloaded constructor
-        this(0, "", "", "", "", 0);
+        this("", "", "", "", "", 0);
     }    
     //
-    public Customer(int custID, String fname, String lname, String address, String password, int cardInfo) {
+    public Customer(String custID, String fname, String lname, String address, String password, int cardInfo) {
         
         //call super constructor
         super(fname, lname, address, password);
@@ -26,11 +26,11 @@ public class Customer extends PersonObj {
     }             
 
     //Getters and Setters    
-    public int getCustID() {
+    public String getCustID() {
         return custID;
     }
     //
-    public void setCustID(int custID) {    
+    public void setCustID(String custID) {    
         this.custID = custID;
     }
     //
@@ -57,7 +57,7 @@ public class Customer extends PersonObj {
             result.next();
             
             //set properties
-            setCustID(result.getInt(2));            
+            setCustID(result.getString(2));            
             setFname(result.getString(1));
             setLname(result.getString(3));
             setAddress(result.getString(4));
@@ -80,7 +80,7 @@ public class Customer extends PersonObj {
             
             //setup statment
             String sql = "INSERT INTO Customers " +
-                         "VALUES ('" + getFname()+ "', '" + getCustID()+ "', '" + getLname()+ "', '" + getAddress()+ "', '" + getPw()+ "', '" + getCardInfo()+ "')";             
+                         "VALUES ('" + getFname()+ "', '" + getCustID()+ "', '" + getLname()+ "', '" + getAddress()+ "', '" + getCardInfo()+ "', '" + getPw()+ "')";             
             
             //execute insertion                         
             int num = databaseAccess.getStatement().executeUpdate(sql);
@@ -116,7 +116,7 @@ public class Customer extends PersonObj {
                 System.out.println("Deletion successful!" + System.lineSeparator());
                 
                 //reset properties
-                this.setCustID(0);
+                this.setCustID("");
                 this.setPw("");
                 this.setFname("");
                 this.setLname("");

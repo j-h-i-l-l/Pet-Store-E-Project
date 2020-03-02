@@ -6,15 +6,15 @@ import java.sql.SQLException;
 public class Administrator extends PersonObj {
     
     //Properties
-    int AdminID;
+    String AdminID;
     
     //Constructors
     public Administrator() {
         //call overloaded constructor
-        this(0, "", "", "", "");
+        this("", "", "", "", "");
     }    
     //    
-    public Administrator(int AdminID, String fname, String lname, String password, String address) {
+    public Administrator(String AdminID, String fname, String lname, String password, String address) {
        
         //call super constructor
         super(fname, lname, password, address);
@@ -22,11 +22,11 @@ public class Administrator extends PersonObj {
     }
     
     //Getters and Setters
-    public int getAdminID() {
+    public String getAdminID() {
         return AdminID;
     }
     //
-    public void setAdminID(int AdminID) {
+    public void setAdminID(String AdminID) {
         this.AdminID = AdminID;
     }
     
