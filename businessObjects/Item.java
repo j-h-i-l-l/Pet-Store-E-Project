@@ -1,60 +1,33 @@
 package Business;
 
-class Item {
+class Item extends Product {
 	
     //Properties
-    int SKU;
-    String name;
-    double price;
-    int stock;
+    int quantity;
    
     //Constuctors
     public Item() {
-        this(0, "", 0.00, 0);
+        this(0, "", 0.00, 0, 1);
     }
     //
-    public Item(int SKU, String name, double price, int stock) {
+    public Item(int SKU, String name, double price, int stock, int quantity) {
         
-        this.SKU = SKU;
-        this.name = name;
-        this.price = price;
-        this.stock = stock;                
+        super(SKU, name, price, stock);
+        this.quantity = quantity;
     }
     
-    //Getters and Setters
-    public int getSKU() {
-        return SKU;
+    //Getters and Setters    
+    public int getQuantity() {
+        return quantity;
     }
     //
-    public void setSKU(int SKU) {
-        this.SKU = SKU;
-    }
-    //
-    public String getName() {
-        return name;
-    }
-    //
-    public void setName(String name) {
-        this.name = name;
-    }
-    //
-    public double getPrice() {
-        return price;
-    }
-    //  
-    public void setPrice(double price) {
-        this.price = price;
-    }
-    //
-    public int getStock() {
-        return stock;
-    }
-    //
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
     
     //DB Methods go here
+
+    
             
     
 }

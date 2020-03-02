@@ -12,7 +12,24 @@ public class ItemList {
     //Constructors
     public ItemList() {
     }
-        
+    
+    //Getters and Setters
+    public int getCount() {
+        return count;
+    }
+    //  
+    public void setCount(int count) {
+        this.count = count;
+    }
+    //
+    public double getTotal() {
+        return total;
+    }
+    //
+    public void setTotal(double total) {
+        this.total = total;
+    }
+            
     //Utility
     public void display(){
         System.out.println("   Item(s) Information   " + System.lineSeparator() +
@@ -21,7 +38,7 @@ public class ItemList {
             System.out.println("No Items Found");
         }else {
             items.forEach((i) -> {
-            System.out.println("SKU: " + i.getSKU()+ System.lineSeparator() +
+            System.out.println("SKU: " + i.getSku()+ System.lineSeparator() +
                                "Name: " + i.getName()+ System.lineSeparator() +
                                "Price: " + i.getPrice()+ System.lineSeparator() +
                                "# in Stock: " + i.getStock()+ System.lineSeparator() +
@@ -31,8 +48,9 @@ public class ItemList {
 
         
     }
-    
+    //
     public void add(Item item){
+        
         items.add(item);
         count++;
         total += item.getPrice();
