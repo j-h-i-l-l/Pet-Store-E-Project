@@ -55,4 +55,14 @@ public class ItemList {
         count++;
         total += item.getPrice();
     }
+    //
+    public void remove(Item item){
+        items.remove(item);
+        count--;
+        total -= item.getPrice();
+    }
+    //
+    public Item get(int index){
+        return items.get(index);
+    }
 }

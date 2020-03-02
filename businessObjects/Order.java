@@ -45,10 +45,9 @@ class Order extends Cart{
     //
     public void setOrderNo(int orderNo) {
         this.orderNo = orderNo;
-    }
-    
+    }    
 
-    //DB methods  
+    //DB methods  - Needs to be finished. SelectDB and InsertDB 
     //
     //Select Order from database and populate object with it
     public void selectDB(int orderNo) {
@@ -64,8 +63,10 @@ class Order extends Cart{
             //set properties
             setOrderNo(rs.getInt(1));
             setCustID(rs.getInt(2));
-            //**TODO Figure out how to get itemlists from db
-            setTotal(rs.getDouble(4));
+            
+            //populates Items ItemList from ORder contents table
+            retrieveOrderContentsDB();
+            
             
             //debug some info to console
             System.out.println("Order " + orderNo + " Successfully selected" + System.lineSeparator());
@@ -84,7 +85,7 @@ class Order extends Cart{
             
             //setup statment
             String sql = "INSERT INTO Orders " +
-                         "VALUES ('" + getOrderNo()+ "', '" + getCustID()+ "', '" + getFname()+ "', '" + getTotal()+ "')";             
+                         "VALUES ('" + getOrderNo()+ "', '" + getCustID()+ "', '" + false + "')";             
             
             //execute insertion                         
             int num = databaseAccess.getStatement().executeUpdate(sql);
@@ -99,6 +100,9 @@ class Order extends Cart{
                 //debug to console
                 System.out.println("Insert failed!" + System.lineSeparator());
             }
+            
+            //insert order contents into OrderContents DB
+            insertOrderContentsDB();
             
             databaseAccess.close();
 
@@ -138,6 +142,80 @@ class Order extends Cart{
             System.out.println("Exception caught - " + ex + System.lineSeparator());
         }
     }
+    //Inserts Order contents into OrderContents Table
+    public void insertOrderContentsDB(){
+        
+        try{
+            Access databaseAccess = new Access();
+            
+            for(int i = 0; i < items.count; i++){
+                //set up string
+                String sql = "INSERT INTO OrderContents " +
+                         "VALUES ('" + items.get(i).getSku() + "', '" + getOrderNo()+ "', '" + items.get(i).getQuantity()+ "')";
+                //execute insertion                         
+                int num = databaseAccess.getStatement().executeUpdate(sql);
+
+                //deal with result
+                if (num == 1){
+
+                    //debug to console
+                    System.out.println("Insert successful!" + System.lineSeparator());
+
+                }else {
+                    //debug to console
+                    System.out.println("Insert failed!" + System.lineSeparator());
+                }
+            }                        
+            
+            //debug some info to console
+            System.out.println("Order contents for " + getOrderNo() + " Successfully Inserted" + System.lineSeparator());
+            
+            //close connection
+            databaseAccess.close();
+            
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            System.out.println("Exception caught - " + ex + System.lineSeparator());
+        }
+        
+        
+    }
+    //retrieves order contents from OrderContents Table
+    public void retrieveOrderContentsDB(){
+        
+        try{
+            Access databaseAccess = new Access();
+            
+            //setup statement and execute it
+            String sql = "select * from OrderContents WHERE OrderNo = '" + getOrderNo() + "'";
+            ResultSet rs = databaseAccess.getStatement().executeQuery(sql);
+            
+            //deal with results
+            while(rs.next()){
+                //create new Item object to get product information from product table
+                Item i = new Item();                
+                i.selectDB(rs.getInt(1));
+                //set quantity from results
+                i.setQuantity(rs.getInt(3));
+                
+                //add item to ItemList
+                items.add(i);
+            }                     
+            
+            //debug some info to console
+            System.out.println("Order contents for " + getOrderNo() + " Successfully retrieved" + System.lineSeparator());
+            
+            //close connection
+            databaseAccess.close();
+            
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            System.out.println("Exception caught - " + ex + System.lineSeparator());
+        }
+        
+        
+    }
+    //
     
     //Utility Methods
     //
@@ -172,5 +250,14 @@ class Order extends Cart{
         
         return resultValue;
         
+    }
+    //
+    @Override
+    public void display(){
+        System.out.println("   Order Information   " + System.lineSeparator() +
+                           "=========================" + System.lineSeparator() +
+                           "Order Number: " + getOrderNo()+ System.lineSeparator() + 
+                           "Customer ID: " + getCustID() + System.lineSeparator() +                            
+                           "Order Total: " + getTotal()+ System.lineSeparator());
     }
 }
