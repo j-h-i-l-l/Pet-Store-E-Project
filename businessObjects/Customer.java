@@ -6,30 +6,39 @@ import java.sql.SQLException;
 public class Customer extends PersonObj {
     
     //Properties
-    String cardInfo;
+    int custID;
+    int cardInfo;
     
     //Constructors
     public Customer() {
         
         //call overloaded constructor
-        this(0, "", "", "", "", "", "");
+        this(0, "", "", "", "", 0);
     }    
-    
-    public Customer(int Id, String fname, String lname, String email, String password, String address, String cardInfo) {
+    //
+    public Customer(int custID, String fname, String lname, String address, String password, int cardInfo) {
         
         //call super constructor
-        super(Id, fname, lname, email, password, address);
-        
+        super(fname, lname, address, password);
+        this.custID = custID;
         this.cardInfo = cardInfo;
         
-    }     
+    }             
 
-    //Getters and Setters
-    public String getCardInfo() {
+    //Getters and Setters    
+    public int getCustID() {
+        return custID;
+    }
+    //
+    public void setCustID(int custID) {    
+        this.custID = custID;
+    }
+    //
+    public int getCardInfo() {
         return cardInfo;
     }
-
-    public void setCardInfo(String cardInfo) {
+    //
+    public void setCardInfo(int cardInfo) {
         this.cardInfo = cardInfo;
     }
            
@@ -48,12 +57,12 @@ public class Customer extends PersonObj {
             result.next();
             
             //set properties
-            setId(result.getInt(1));
-            setPw(result.getString(2));
-            setFname(result.getString(3));
-            setLname(result.getString(4));
-            setAddress(result.getString(5));
-            setEmail(result.getString(6));                        
+            setCustID(result.getInt(2));            
+            setFname(result.getString(1));
+            setLname(result.getString(3));
+            setAddress(result.getString(4));
+            setPw(result.getString(6));
+            setCardInfo(result.getInt(5));                        
             
             System.out.println("Customer " + ID + " Successfully selected" + System.lineSeparator());
             
@@ -62,8 +71,8 @@ public class Customer extends PersonObj {
         catch (ClassNotFoundException | SQLException ex) {
             System.out.println("Exception caught - " + ex + System.lineSeparator());
         }
-    }
-
+    }    
+    //Insert populated Customer Object into database
     @Override
     public void insertDB() {
         try{
@@ -71,7 +80,7 @@ public class Customer extends PersonObj {
             
             //setup statment
             String sql = "INSERT INTO Customers " +
-                         "VALUES ('" + getId()+ "', '" + getPw()+ "', '" + getFname()+ "', '" + getLname()+ "', '" + getAddress()+ "', '" + getEmail()+ "')";             
+                         "VALUES ('" + getFname()+ "', '" + getCustID()+ "', '" + getLname()+ "', '" + getAddress()+ "', '" + getPw()+ "', '" + getCardInfo()+ "')";             
             
             //execute insertion                         
             int num = databaseAccess.getStatement().executeUpdate(sql);
@@ -89,14 +98,14 @@ public class Customer extends PersonObj {
             System.out.println("Exception caught - " + ex + System.lineSeparator());
         }
     }
-
+    //Delete populated Customer Object into database
     @Override
     public void deleteDB() {
        try{
             Access databaseAccess = new Access();
             
             //setup statment
-            String sql = "DELETE FROM Customers WHERE CustID = " + getId(); 
+            String sql = "DELETE FROM Customers WHERE CustID = " + getCustID(); 
                      
             //execute Deletion                         
             int num = databaseAccess.getStatement().executeUpdate(sql);
@@ -107,12 +116,12 @@ public class Customer extends PersonObj {
                 System.out.println("Deletion successful!" + System.lineSeparator());
                 
                 //reset properties
-                this.setId(0);
+                this.setCustID(0);
                 this.setPw("");
                 this.setFname("");
                 this.setLname("");
                 this.setAddress("");
-                this.setEmail("");
+                this.setCardInfo(0);
             }else {
                 //debug to console
                 System.out.println("Deletion failed!" + System.lineSeparator());
@@ -121,6 +130,20 @@ public class Customer extends PersonObj {
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println("Exception caught - " + ex + System.lineSeparator());
         }
+    }
+    
+    //Utility
+    @Override
+    public void display(){
+        System.out.println("   Customer Information   " + System.lineSeparator() +
+                           "=========================" + System.lineSeparator() +
+                           "Customer ID: " + getCustID()+ System.lineSeparator() +
+                           "Password: " + getPw()+ System.lineSeparator() +
+                           "First Name: " + getFname()+ System.lineSeparator() +
+                           "Last Name: " + getLname()+ System.lineSeparator() +
+                           "Address: " + getAddress()+ System.lineSeparator() +
+                           "Card Information: " + getCardInfo()+ System.lineSeparator() +
+                           "=========================");
     }
     
 

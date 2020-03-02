@@ -5,21 +5,35 @@ import java.sql.SQLException;
 
 public class Administrator extends PersonObj {
     
+    //Properties
+    int AdminID;
+    
     //Constructors
     public Administrator() {
         //call overloaded constructor
-        this(0, "", "", "", "", "");
+        this(0, "", "", "", "");
     }    
     //    
-    public Administrator(int Id, String fname, String lname, String email,  String password, String address) {
+    public Administrator(int AdminID, String fname, String lname, String password, String address) {
        
         //call super constructor
-        super(Id, fname, lname, email, password, address);
+        super(fname, lname, password, address);
+        this.AdminID = AdminID;
     }
+    
+    //Getters and Setters
+    public int getAdminID() {
+        return AdminID;
+    }
+    //
+    public void setAdminID(int AdminID) {
+        this.AdminID = AdminID;
+    }
+    
 
     //Database access methods
     //
-    //Select Customer from database and populate object with it
+    //Select Admin from database and populate object with it
     @Override
     public void selectDB(int ID) {
         
@@ -33,12 +47,11 @@ public class Administrator extends PersonObj {
             rs.next();
             
             //set properties
-            setId(rs.getInt(1));
-            setPw(rs.getString(2));
-            setFname(rs.getString(3));
-            setLname(rs.getString(4));
-            setAddress(rs.getString(5));
-            setEmail(rs.getString(6)); 
+            setAdminID(rs.getInt(1));
+            setFname(rs.getString(2));
+            setLname(rs.getString(3));
+            setAddress(rs.getString(4));
+            setPw(rs.getString(5));
             
             //debug some info to console
             System.out.println("Administrator " + ID + " Successfully selected" + System.lineSeparator());
@@ -51,7 +64,7 @@ public class Administrator extends PersonObj {
         }
     }
     //
-    //Insert populated Customer Object into database
+    //Insert populated Admin Object into database
     @Override
     public void insertDB() {
         
@@ -60,7 +73,7 @@ public class Administrator extends PersonObj {
             
             //setup statment
             String sql = "INSERT INTO Administrators " +
-                         "VALUES ('" + getId()+ "', '" + getPw()+ "', '" + getFname()+ "', '" + getLname()+ "', '" + getAddress()+ "', '" + getEmail()+ "')";             
+                         "VALUES ('" + getAdminID()+ "', '" + getFname()+ "', '" + getLname()+ "', '" + getAddress()+ "', '" + getPw()+ "')";             
             
             //execute insertion                         
             int num = databaseAccess.getStatement().executeUpdate(sql);
@@ -86,7 +99,7 @@ public class Administrator extends PersonObj {
         
     }
     //
-    //Delete populated Customer Object from database
+    //Delete populated Admin Object from database
     @Override
     public void deleteDB() {
         
@@ -94,7 +107,7 @@ public class Administrator extends PersonObj {
             Access databaseAccess = new Access();
             
             //setup statment
-            String sql = "DELETE FROM Administrators WHERE ID = " + getId();          
+            String sql = "DELETE FROM Administrators WHERE ID = " + getAdminID();          
             
             //execute Deletion                                               
             int num = databaseAccess.getStatement().executeUpdate(sql);
@@ -104,12 +117,11 @@ public class Administrator extends PersonObj {
                 //debug to console
                 System.out.println("Deletion successful!" + System.lineSeparator());
                 //reset properties to blank values
-                this.setId(0);
-                this.setPw("");
+                this.setAdminID(0);
                 this.setFname("");
                 this.setLname("");
                 this.setAddress("");
-                this.setEmail("");
+                this.setPw("");
             }else {
                 //debug to console
                 System.out.println("Deletion failed!" + System.lineSeparator());
@@ -119,6 +131,19 @@ public class Administrator extends PersonObj {
             System.out.println("Exception caught - " + ex + System.lineSeparator());
         }
         
+    }
+    
+    //Utility
+    @Override
+    public void display(){
+        System.out.println("   Administrator Information   " + System.lineSeparator() +
+                           "=========================" + System.lineSeparator() +
+                           "Administrator ID: " + getAdminID()+ System.lineSeparator() +
+                           "Password: " + getPw()+ System.lineSeparator() +
+                           "First Name: " + getFname()+ System.lineSeparator() +
+                           "Last Name: " + getLname()+ System.lineSeparator() +
+                           "Address: " + getAddress()+ System.lineSeparator() +
+                           "=========================");
     }
   
 
