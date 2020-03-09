@@ -17,7 +17,7 @@
 .content a:hover {
     text-decoration: none;
     color: green;
-    
+
 }
 .content a:active {
     color: #000000;
@@ -40,7 +40,7 @@
     color: white;
     text-shadow: 10px 10px 30px rgba(0, 0, 0, 0.85);
     letter-spacing: 15px;
-    font-weight: bold;  
+    font-weight: bold;
 }
  .logo-img{
     width: 250px;
@@ -51,14 +51,14 @@
 .navbar .navbar-nav {
     margin-left: auto;
     margin-right: auto;
-    
+
 }
 .navbar .navbar-collapse {
   text-align: center;
-    
+
 }
 .navbar a {
-    
+
     font-size: 20px;
 }
 
@@ -67,7 +67,7 @@
 .col-sm-12 h1{
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     color: white;
     text-shadow: 10px 10px 30px rgba(0, 0, 0, 0.85);
     font-size: 60px;
@@ -77,13 +77,31 @@
     margin-bottom: 25px;
     border-bottom: 2px solid #e6e6e6;
     padding-bottom: 25px;
-    
+
+}
+#admin-header {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #e6e6e6;
+    padding-bottom: 25px;
+}
+#order-table table, th, td {
+  font-size: 30px;
+  border: 2px solid white;
+  padding: 10px;
+  text-align: right;
+  color: black;
+}
+#order-table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 100px;
 }
 
 
 /*Shop By Pet Rows*/
 #pet-row-one {
-    justify-content: center;  
+    justify-content: center;
 }
 #pet-row-two {
    justify-content: center;
@@ -92,7 +110,7 @@
     /* Add padding BETWEEN each column */
     .row,
     .row > .column {
-      padding: 20px; 
+      padding: 20px;
     }
 
     /* Create three equal columns that floats next to each other */
@@ -100,7 +118,7 @@
       width: 33%;
     }
 
-    /* Clear floats after rows */ 
+    /* Clear floats after rows */
     .row:after {
       content: "";
       display: table;
@@ -117,7 +135,7 @@
     .content h3 {
         display: flex;
         justify-content: center;
-        align-items: center; 
+        align-items: center;
         color: #898989;
         font-weight: 400;
         text-decoration: none;
@@ -160,8 +178,3 @@
         font-size: 29px;
     }
 }
-
-
-
-
-
